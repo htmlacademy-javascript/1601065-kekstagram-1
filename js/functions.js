@@ -33,6 +33,7 @@ function returnsNumbers(number){
 console.log(returnsNumbers('2023 год'));
 console.log(returnsNumbers('ECMAScript 2022'));
 console.log(returnsNumbers('1 кефир, 0.5 батона'));
+console.log(returnsNumbers('агент 007'));
 console.log(returnsNumbers('а я томат'));
 
 
