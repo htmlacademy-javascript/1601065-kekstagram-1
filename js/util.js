@@ -19,4 +19,4 @@ const createIdGenerator = () => {
 const generateCommentId = createIdGenerator();
 
 
-export{getRandomArrayElement, generateCommentId, getRandomInteger};
+export {getRandomArrayElement, generateCommentId, getRandomInteger};
