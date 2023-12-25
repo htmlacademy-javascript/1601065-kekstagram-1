@@ -1,5 +1,5 @@
 import {getPictures} from './data.js';
+import {renderPicture} from './render-pictures.js';
 
-console.log(
-  getPictures()
-);
+const pictureData = getPictures();
+renderPicture(pictureData);
