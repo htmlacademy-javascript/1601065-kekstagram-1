@@ -18,5 +18,7 @@ const createIdGenerator = () => {
 
 const generateCommentId = createIdGenerator();
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEnterKey = (evt) => evt.key === 'Enter';
 
-export {getRandomArrayElement, generateCommentId, getRandomInteger};
+export {getRandomArrayElement, generateCommentId, getRandomInteger, isEscapeKey, isEnterKey};

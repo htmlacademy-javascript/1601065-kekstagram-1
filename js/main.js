@@ -1,5 +1,7 @@
 import {getPictures} from './data.js';
-import {renderPicture} from './render-pictures.js';
+import {renderPictures} from './render-pictures.js';
+import './user-modal.js';
+import './creating-modal.js';
 
 const pictureData = getPictures();
-renderPicture(pictureData);
+renderPictures(pictureData);

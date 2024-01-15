@@ -1,10 +1,10 @@
-const pictureContainer = document.querySelector('.pictures');
+export const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
 
-export const renderPicture = (picture) => {
+export const renderPictures = (picture) => {
   const pictureFragment = document.createDocumentFragment();
 
   picture.forEach(({url, comments, likes}) => {
