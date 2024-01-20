@@ -46,5 +46,5 @@ closePicture.addEventListener('keydown', (evt) => {
   }
 });
 
-export {openPicture};
+export {openPicture, openUserModal, closeUserModal, onDocumentKeydown};
 
