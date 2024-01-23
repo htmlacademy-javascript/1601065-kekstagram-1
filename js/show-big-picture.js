@@ -51,7 +51,6 @@ const renderPictureDetails = (picture) => {
   bigPictureImg.src = picture.url;
   likesCount.textContent = picture.likes;
   commentsCount.textContent = picture.comments.length;
-
 };
 
 const renderComments = (comments) => {
