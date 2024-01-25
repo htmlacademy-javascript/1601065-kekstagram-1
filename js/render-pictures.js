@@ -5,7 +5,6 @@ const pictureTemplate = document.querySelector('#picture')
 
 
 export const renderPictures = (pictures) => {
-
   const pictureFragment = document.createDocumentFragment();
 
   pictures.forEach(({url, comments, likes, id, description}) => {
@@ -17,10 +16,8 @@ export const renderPictures = (pictures) => {
     photosElement.querySelector('.picture__likes').textContent = likes;
     photosElement.dataset.id = id;
     pictureFragment.appendChild(photosElement);
-
   });
 
   pictureContainer.appendChild(pictureFragment);
-
 };
 
