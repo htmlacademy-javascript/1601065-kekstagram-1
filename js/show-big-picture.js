@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 
+const NUMBER_UPLOADED_COMMENTS = 5;
+
 const commentsLoader = document.querySelector('.comments-loader');
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
@@ -9,6 +11,7 @@ const commentsCount = bigPicture.querySelector('.comments-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const commentTemplate = bigPicture.querySelector('.social__comment');
+let commentsShow = 0;
 
 
 const onDocumentKeydown = (evt) => {
@@ -45,12 +48,36 @@ const renderPictureDetails = (picture) => {
   commentsCount.textContent = picture.comments.length;
 };
 
+
 const renderComments = (comments) => {
+
+  commentsShow = + NUMBER_UPLOADED_COMMENTS;
+
+  if (commentsShow >= comments.length){
+    commentsLoader.classList.add('hidden');
+    commentsShow = comments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  for (let i = 0; i < commentsShow; i++){
+
+    const commentElement = renderComments(comments[i]);
+    fragment.append(commentElement);
+  }
+
+  socialComments.innerHTML = '';
+  socialComments.append(fragment);
+
+
   socialComments.innerHTML = '';
 
   const commentFragment = document.createDocumentFragment();
 
-  comments.forEach(({ avatar, name, message }) => {
+  comments.forEach(({ avatar, message, name }) => {
+
     const commentElement = commentTemplate.cloneNode(true);
     const img = commentElement.querySelector('img');
     img.src = avatar;
@@ -61,14 +88,20 @@ const renderComments = (comments) => {
   });
 
   socialComments.appendChild(commentFragment);
+
+
 };
 
 
 const showBigPicture = (data) => {
   openUserModal();
-  commentsLoader.classList.add('hidden');
   renderPictureDetails(data);
   renderComments(data.comments);
+
+  commentsLoader .addEventListener('click', () => {
+    renderComments(data.comments);
+  });
 };
+
 
 export { showBigPicture, bigPicture, openUserModal, closeUserModal, onDocumentKeydown };

@@ -50,4 +50,4 @@ const getPictures = () =>
   Array.from({length:PICTURE_COUNT}, (_, pictureIndex) => createPicture (pictureIndex + 1));
 
 
-export {getPictures};
+export { getPictures };
