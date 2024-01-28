@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { createComment } from './data.js';
 
 const NUMBER_UPLOADED_COMMENTS = 5;
 
@@ -50,12 +51,11 @@ const renderPictureDetails = (picture) => {
 
 
 const renderComments = (comments) => {
-
   commentsShow = + NUMBER_UPLOADED_COMMENTS;
-
+debugger
   if (commentsShow >= comments.length){
     commentsLoader.classList.add('hidden');
-    commentsShow = comments.length;
+    // commentsShow = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
@@ -64,7 +64,7 @@ const renderComments = (comments) => {
 
   for (let i = 0; i < commentsShow; i++){
 
-    const commentElement = renderComments(comments[i]);
+    const commentElement = createComment(comments[i]);
     fragment.append(commentElement);
   }
 
@@ -98,9 +98,6 @@ const showBigPicture = (data) => {
   renderPictureDetails(data);
   renderComments(data.comments);
 
-  commentsLoader .addEventListener('click', () => {
-    renderComments(data.comments);
-  });
 };
 
 
