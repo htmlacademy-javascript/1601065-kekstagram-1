@@ -1,5 +1,4 @@
 import { isEscapeKey } from './util.js';
-import { createComment } from './data.js';
 
 const NUMBER_UPLOADED_COMMENTS = 5;
 
@@ -12,7 +11,9 @@ const commentsCount = bigPicture.querySelector('.comments-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const commentTemplate = bigPicture.querySelector('.social__comment');
+const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 let commentsShow = 0;
+let numberComments = 5;
 
 
 const onDocumentKeydown = (evt) => {
@@ -49,47 +50,77 @@ const renderPictureDetails = (picture) => {
   commentsCount.textContent = picture.comments.length;
 };
 
+const renderComment = (comment) => {
+  const commentElement = commentTemplate.cloneNode(true);
+  const img = commentElement.querySelector('img');
+  img.src = comment.avatar;
+  const paragraph = commentElement.querySelector('p');
+  paragraph.textContent = comment.message;
+  socialCaption.textContent = comment.name;
+
+  return commentElement;
+};
+
+
+// const renderAllComments = (comments) => {
+//   const commentFragment = document.createDocumentFragment();
+
+//   comments.forEach((comment) => {
+//     const commentElement = renderComment(comment);
+
+//     commentFragment.appendChild(commentElement);
+//   });
+
+//   socialComments.appendChild(commentFragment);
+// };
+
 
 const renderComments = (comments) => {
-  commentsShow = + NUMBER_UPLOADED_COMMENTS;
-debugger
+  socialCommentCount.innerHTML = '';
+
+  if (comments.length >= numberComments) {
+    socialCommentCount.textContent = `${numberComments} из ${ comments.length } комментариев`;
+  } else {
+    socialCommentCount.textContent = `${comments.length} из ${ comments.length } комментариев`;
+  }
+
+  commentsShow += NUMBER_UPLOADED_COMMENTS;
+
   if (commentsShow >= comments.length){
     commentsLoader.classList.add('hidden');
-    // commentsShow = comments.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
 
-  const fragment = document.createDocumentFragment();
+  if (comments.length >= commentsShow){
+    socialComments.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < commentsShow; i++){
+      const commentElement = renderComment(comments[i]);
+      fragment.append(commentElement);
+    }
+    socialComments.append(fragment);
+  } else {
+    socialComments.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < comments.length; i++){
+      const commentElement = renderComment(comments[i]);
+      fragment.append(commentElement);
+    }
 
-  for (let i = 0; i < commentsShow; i++){
-
-    const commentElement = createComment(comments[i]);
-    fragment.append(commentElement);
+    socialComments.append(fragment);
   }
 
-  socialComments.innerHTML = '';
-  socialComments.append(fragment);
 
-
-  socialComments.innerHTML = '';
-
-  const commentFragment = document.createDocumentFragment();
-
-  comments.forEach(({ avatar, message, name }) => {
-
-    const commentElement = commentTemplate.cloneNode(true);
-    const img = commentElement.querySelector('img');
-    img.src = avatar;
-    const paragraph = commentElement.querySelector('p');
-    paragraph.textContent = message;
-    socialCaption.textContent = name;
-    commentFragment.appendChild(commentElement);
+  commentsLoader.addEventListener('click', () => {
+    numberComments += commentsShow;
+debugger
+console.log(renderComment(comments[commentsShow]))
+    if (commentsShow, commentsShow < numberComments && commentsShow < comments.length, commentsShow++) {
+      socialComments.innerHTML += renderComment(comments[commentsShow]);
+      socialCommentCount.textContent = `${commentsShow} из ${ comments.length } комментариев`;
+    }
   });
-
-  socialComments.appendChild(commentFragment);
-
-
 };
 
 
@@ -97,8 +128,7 @@ const showBigPicture = (data) => {
   openUserModal();
   renderPictureDetails(data);
   renderComments(data.comments);
-
 };
 
 
-export { showBigPicture, bigPicture, openUserModal, closeUserModal, onDocumentKeydown };
+export { showBigPicture, openUserModal, closeUserModal, onDocumentKeydown };
