@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import {uploadCancel, imgUpload} from './form.js';
 
 const commentsLoader = document.querySelector('.comments-loader');
 const bigPicture = document.querySelector('.big-picture');
@@ -16,6 +17,7 @@ const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUserModal();
+    uploadCancel();
   }
 };
 
@@ -69,6 +71,7 @@ const showBigPicture = (data) => {
   commentsLoader.classList.add('hidden');
   renderPictureDetails(data);
   renderComments(data.comments);
+  imgUpload();
 };
 
 export { showBigPicture, bigPicture, openUserModal, closeUserModal, onDocumentKeydown };
