@@ -11,6 +11,7 @@ imgUpload.addEventListener('change', () => {
   imgUploadPreview.style.display = 'block';
 });
 
+
 uploadCancel.addEventListener('click', () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
