@@ -1,5 +1,4 @@
 import { isEscapeKey } from './util.js';
-import {uploadCancel, imgUpload} from './form.js';
 
 const commentsLoader = document.querySelector('.comments-loader');
 const bigPicture = document.querySelector('.big-picture');
@@ -11,16 +10,13 @@ const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const commentTemplate = bigPicture.querySelector('.social__comment');
 
-
 const onDocumentKeydown = (evt) => {
 
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUserModal();
-    uploadCancel();
   }
 };
-
 
 function openUserModal () {
   document.body.classList.add('modal-open');
@@ -28,18 +24,15 @@ function openUserModal () {
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-
 function closeUserModal () {
   document.body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-
 closeButton.addEventListener('click', () => {
   closeUserModal();
 });
-
 
 const renderPictureDetails = (picture) => {
   bigPictureImg.src = picture.url;
@@ -65,13 +58,11 @@ const renderComments = (comments) => {
   socialComments.appendChild(commentFragment);
 };
 
-
 const showBigPicture = (data) => {
   openUserModal();
   commentsLoader.classList.add('hidden');
   renderPictureDetails(data);
   renderComments(data.comments);
-  imgUpload();
 };
 
-export { showBigPicture, bigPicture, openUserModal, closeUserModal, onDocumentKeydown };
+export { showBigPicture, openUserModal, closeUserModal, onDocumentKeydown };

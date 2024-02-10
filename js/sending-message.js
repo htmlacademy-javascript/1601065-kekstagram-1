@@ -1,5 +1,3 @@
-import { onDocumentKeydown } from './show-big-picture.js';
-
 const success = document.getElementById('success').content;
 const newItemTemplateSusses = success.querySelector('.success');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -43,9 +41,5 @@ function shippedMessageError () {
   const cloneTemplateError = newTemplateError.cloneNode(true);
   document.body.appendChild(cloneTemplateError);
 }
-
-// successButton.addEventListener('click', () => {
-//   success.remove();
-// });
 
 export {shippedMessageSuccess, shippedMessageError};
