@@ -10,7 +10,7 @@ const uploadCancel = document.getElementById('upload-cancel');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const imgUploadInput = document.querySelector('.img-upload__start input[type=file]');
-const effectsPreview = document.querySelector('.effects__preview');
+const effectsPreview = document.querySelectorAll('.effects__preview');
 
 const onDocumentKeydown = (evt) => {
 
@@ -35,20 +35,23 @@ function closeUploadModal () {
   resetValidation();
 }
 
+const downloadPicture = () => {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    imgUploadPreview.src = URL.createObjectURL(file);
+    effectsPreview.forEach((listObj) => {
+      listObj.style.backgroundImage = `url(${ URL.createObjectURL(file) })`;
+    });
+  }
+};
+
 const setPhotoListener = () => {
   imgUpload.addEventListener('change', () => {
     openUploadModal();
-    // imgUploadPreview.src = URL.createObjectURL(imgUploadPreview.files[0]);
-
-    const file = imgUploadInput.files[0];
-    const fileName = file.name.toLowerCase();
-
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
-    if (matches) {
-      imgUploadPreview.src = URL.createObjectURL(file);
-      effectsPreview.style.backgroundImage = 'url()';
-    }
+    downloadPicture();
 
   });
 
