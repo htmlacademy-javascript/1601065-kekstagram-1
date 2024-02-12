@@ -10,7 +10,6 @@ const socialComments = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const commentTemplate = bigPicture.querySelector('.social__comment');
 
-
 const onDocumentKeydown = (evt) => {
 
   if (isEscapeKey(evt)) {
@@ -19,13 +18,11 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-
 function openUserModal () {
   document.body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
 }
-
 
 function closeUserModal () {
   document.body.classList.remove('modal-open');
@@ -33,11 +30,9 @@ function closeUserModal () {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-
 closeButton.addEventListener('click', () => {
   closeUserModal();
 });
-
 
 const renderPictureDetails = (picture) => {
   bigPictureImg.src = picture.url;
@@ -63,7 +58,6 @@ const renderComments = (comments) => {
   socialComments.appendChild(commentFragment);
 };
 
-
 const showBigPicture = (data) => {
   openUserModal();
   commentsLoader.classList.add('hidden');
@@ -71,4 +65,4 @@ const showBigPicture = (data) => {
   renderComments(data.comments);
 };
 
-export { showBigPicture, bigPicture, openUserModal, closeUserModal, onDocumentKeydown };
+export { showBigPicture, openUserModal, closeUserModal, onDocumentKeydown };
