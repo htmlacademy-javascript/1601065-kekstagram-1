@@ -19,8 +19,8 @@ const onDocumentKeydown = (evt) => {
     closeUploadModal();
   }
 };
-
 function openUploadModal () {
+  debugger
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -31,7 +31,7 @@ function openUploadModal () {
 function closeUploadModal () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
   resetValidation();
 }
 

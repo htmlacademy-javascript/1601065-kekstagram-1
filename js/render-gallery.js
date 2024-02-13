@@ -3,7 +3,7 @@ import { showBigPicture } from './show-big-picture.js';
 
 const pictureContainer = document.querySelector('.pictures');
 
-const renderGalery = (pictures) => {
+const renderGallery = (pictures) => {
   pictureContainer.addEventListener('click', (evt) => {
     const photosElement = evt.target.closest('[data-id]');
 
@@ -22,5 +22,5 @@ const renderGalery = (pictures) => {
 };
 
 
-export {renderGalery};
+export {renderGallery};
 
