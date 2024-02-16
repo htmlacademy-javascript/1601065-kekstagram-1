@@ -20,7 +20,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 function openUploadModal () {
-  debugger
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -60,5 +59,5 @@ const setPhotoListener = () => {
   });
 };
 
-export {setPhotoListener};
+export {setPhotoListener, openUploadModal, closeUploadModal};
 
