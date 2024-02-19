@@ -24,6 +24,6 @@ const showMessageError = () => {
   document.body.appendChild(cloneTemplateError);
   document.addEventListener('keydown', successMessageErrorClose, {once: true});
   successButtonMessageError.addEventListener('click', successMessageErrorClose, {once: true});
-}
+};
 
 export {showSuccessMessage, showMessageError};
