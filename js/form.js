@@ -3,6 +3,7 @@ import { resetValidation, validateForm } from './validation.js';
 import { resetScale } from './size-picture.js';
 import { resetEffect } from './picture-filter.js';
 import { sendData } from './api.js';
+import { showSuccessMessage, showMessageError } from './show-modal-message.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -50,7 +51,7 @@ const onDocumentKeydown = (evt) => {
 function openUploadModal () {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydown, {once: true});
   resetScale();
   resetEffect();
 }
@@ -58,8 +59,8 @@ function openUploadModal () {
 function closeUploadModal () {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
   resetValidation();
+  imgUpload.value = '';
 }
 
 const downloadPicture = () => {
@@ -99,10 +100,11 @@ const unblockSubmitButton = () => {
 
 const onSendSuccess = () => {
   closeUploadModal();
+  showSuccessMessage();
 };
 
 const onSendFail = () => {
-  console.log('ошибка');
+  showMessageError();
 };
 
 const setUserFormSubmit = () => {
@@ -121,5 +123,5 @@ const setUserFormSubmit = () => {
   });
 };
 
-export {setPhotoListener, setUserFormSubmit};
+export {setPhotoListener, setUserFormSubmit, onDocumentKeydown};
 
