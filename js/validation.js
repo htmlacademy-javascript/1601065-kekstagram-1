@@ -1,13 +1,9 @@
-import { showAlert } from './util.js';
-import { sendData } from './api.js';
-
 const MAX_HASHTAG_COUNT = 5;
 const TAG_ERROR_TEXT = 'Не правильно указали хештег';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const imgForm = document.querySelector('.img-upload__form');
 const textHashtags = document.querySelector('.text__hashtags');
-const submitButton = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine (imgForm, {
   classTo: 'img-upload__field-wrapper',
@@ -31,53 +27,18 @@ const validateTags = (value) => {
   return hasValidCount(tags) && hasUniqueTags(tags) && tags.every(isValidTag);
 };
 
-const SubmitButtonText = {
-  IDLE: 'ОПУБЛИКОВАТЬ',
-  SENDING: 'Отправляю...'
-};
-
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
-};
-
-const setUserFormSubmit = (onSuccess) => {
-  // const onFormSubmit = () => {
-  imgForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    pristine.validate();
-
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
-        })
-        .finally(unblockSubmitButton);
-    }
-  });
-};
-// };
-
 const setupValidation = () => {
   pristine.addValidator(
     textHashtags,
     validateTags,
     TAG_ERROR_TEXT
   );
-  setUserFormSubmit();
-  // imgForm.addEventListener('submit', onFormSubmit);
 };
+
+const validateForm = () => pristine.validate();
 
 const resetValidation = () => {
   pristine.reset();
 };
 
-export {setupValidation, resetValidation, setUserFormSubmit};
+export {setupValidation, resetValidation, validateForm};
