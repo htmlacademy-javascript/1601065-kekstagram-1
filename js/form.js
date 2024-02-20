@@ -23,42 +23,33 @@ const imgForm = document.querySelector('.img-upload__form');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
-const isFocusid = () =>
+const isTextFaildFocused = () =>
   document.activeElement === textHashtags ||
   document.activeElement === textDescription;
 
-textHashtags.addEventListener('keydown', (evt) => {
-
-  if (evt.key === 'Escape'){
-    evt.stopPropagation();
-  }
-});
-
-textDescription.addEventListener('keydown', (evt) => {
-
-  if (evt.key === 'Escape'){
-    evt.stopPropagation();
-  }
-});
-
 const onDocumentKeydown = (evt) => {
-
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !isTextFaildFocused()) {
     evt.preventDefault();
     closeUploadModal();
   }
 };
-function openUploadModal () {
+const openUploadModal = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown, {once: true});
+  document.addEventListener('keydown', onDocumentKeydown);
   resetScale();
   resetEffect();
-}
+};
 
-function closeUploadModal () {
+function closeUploadModal() {
+
+  if (document.body.classList.contains('error')){
+    document.body.classList.remove('error');
+    return;
+  }
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
   resetValidation();
   imgUpload.value = '';
 }
@@ -83,8 +74,8 @@ const setPhotoListener = () => {
 
   });
 
-  uploadCancel.addEventListener('click', () => {
-    closeUploadModal();
+  uploadCancel.addEventListener('click', (evt) => {
+    closeUploadModal(evt);
   });
 };
 

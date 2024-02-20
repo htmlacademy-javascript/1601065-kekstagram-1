@@ -6,7 +6,6 @@ import { renderPictures } from './render-pictures.js';
 import { getData} from './api.js';
 import { showAlert } from './util.js';
 import {renderGallery} from './render-gallery.js';
-import { showSuccessMessage } from './show-modal-message.js';
 
 const PICTURE_COUNT = 25;
 
@@ -15,7 +14,6 @@ setupValidation();
 initScale();
 initSlider();
 setUserFormSubmit();
-// showSuccessMessage();
 
 getData()
   .then((picture) => {

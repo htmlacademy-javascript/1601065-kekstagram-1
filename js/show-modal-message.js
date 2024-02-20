@@ -4,26 +4,43 @@ const newTemplateError = error.querySelector('.error');
 const cloneTemplateSuccess = successTemplate.cloneNode(true);
 const successButtonMessage = cloneTemplateSuccess.querySelector('.success__button');
 const cloneTemplateError = newTemplateError.cloneNode(true);
-const successButtonMessageError = cloneTemplateError.querySelector('.error__button');
+const buttonMessageError = cloneTemplateError.querySelector('.error__button');
 
-const successMessageClose = () => {
+const closeSuccessMessage = () => {
+  document.removeEventListener('keydown', closeSuccessMessage);
+  successButtonMessage.removeEventListener('click', closeSuccessMessage);
   cloneTemplateSuccess.remove();
 };
 
 const showSuccessMessage = () => {
   document.body.appendChild(cloneTemplateSuccess);
-  document.addEventListener('keydown', successMessageClose, {once: true});
-  successButtonMessage.addEventListener('click', successMessageClose, {once: true});
+  document.addEventListener('keydown', closeSuccessMessage);
+  successButtonMessage.addEventListener('click', closeSuccessMessage);
+  document.addEventListener('click', (evt) => {
+
+    if (evt.target && evt.target.classList.contains('success')){
+      closeSuccessMessage();
+    }
+  });
 };
 
-const successMessageErrorClose = () => {
+const closeErrorMessage = () => {
+  document.removeEventListener('keydown', closeErrorMessage);
+  buttonMessageError.addEventListener('click', closeErrorMessage);
   cloneTemplateError.remove();
 };
 
 const showMessageError = () => {
   document.body.appendChild(cloneTemplateError);
-  document.addEventListener('keydown', successMessageErrorClose, {once: true});
-  successButtonMessageError.addEventListener('click', successMessageErrorClose, {once: true});
+  document.body.classList.add('error');
+  document.addEventListener('keydown', closeErrorMessage);
+  buttonMessageError.addEventListener('click', closeErrorMessage);
+  document.addEventListener('click', (evt) => {
+
+    if (evt.target && evt.target.classList.contains('error')) {
+      closeErrorMessage();
+    }
+  });
 };
 
 export {showSuccessMessage, showMessageError};
