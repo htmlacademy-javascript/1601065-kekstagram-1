@@ -63,7 +63,6 @@ const showBigPicture = (data) => {
   commentsLoader.classList.add('hidden');
   renderPictureDetails(data);
   renderComments(data.comments);
-
 };
 
 export { showBigPicture, openUserModal, closeUserModal, onDocumentKeydown };
