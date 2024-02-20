@@ -12,9 +12,9 @@ const socialComments = bigPicture.querySelector('.social__comments');
 const commentTemplate = bigPicture.querySelector('.social__comment');
 const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 
+
 let commentsShown = UPLOADED_COMMENTS_AMOUNT;
 let pictureComments = [];
-
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -77,6 +77,7 @@ const numberComments = () => {
   commentsShown = Math.min(commentsShown, pictureComments.length);
   socialCommentCount.textContent = `${commentsShown} из ${pictureComments.length} комментариев`;
 };
+
 
 function onCommentsLoaderClick () {
   commentsShown += UPLOADED_COMMENTS_AMOUNT;
