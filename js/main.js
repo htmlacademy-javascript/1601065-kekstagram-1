@@ -1,15 +1,31 @@
-import {getPictures} from './data.js';
-import {renderGallery} from './render-gallery.js';
 import {setupValidation} from './validation.js';
-import {setPhotoListener} from './form.js';
+import {setPhotoListener, setUserFormSubmit} from './form.js';
 import { initScale } from './size-picture.js';
 import { initSlider } from './picture-filter.js';
+import { renderPictures } from './render-pictures.js';
+import { getData} from './api.js';
+import { showAlert, debounce } from './util.js';
+import {renderGallery} from './render-gallery.js';
+import { showFilters } from './filter.js';
+// import './filter.js';
 
-const pictureData = getPictures();
-
-renderGallery(pictureData);
+const PICTURE_COUNT = 25;
+const RERENDER_DELAY = 500;
 
 setPhotoListener();
 setupValidation();
 initScale();
 initSlider();
+setUserFormSubmit();
+
+getData()
+  .then((picture) => {
+    renderPictures(picture.slice(0, PICTURE_COUNT));
+    showFilters();
+    renderGallery(picture);
+  })
+  .catch(
+    (err) => {
+      showAlert(err.message);
+    }
+  );

@@ -27,22 +27,18 @@ const validateTags = (value) => {
   return hasValidCount(tags) && hasUniqueTags(tags) && tags.every(isValidTag);
 };
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-};
-
 const setupValidation = () => {
   pristine.addValidator(
     textHashtags,
     validateTags,
     TAG_ERROR_TEXT
   );
-  imgForm.addEventListener('submit', onFormSubmit)
 };
+
+const validateForm = () => pristine.validate();
 
 const resetValidation = () => {
   pristine.reset();
 };
 
-export {setupValidation, resetValidation};
+export {setupValidation, resetValidation, validateForm};

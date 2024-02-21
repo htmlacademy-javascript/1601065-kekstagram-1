@@ -1,4 +1,3 @@
-import { renderPictures } from './render-pictures.js';
 import { showBigPicture } from './show-big-picture.js';
 
 const pictureContainer = document.querySelector('.pictures');
@@ -18,7 +17,7 @@ const renderGallery = (pictures) => {
     showBigPicture(picture);
   });
 
-  renderPictures(pictures);
+
 };
 
 
