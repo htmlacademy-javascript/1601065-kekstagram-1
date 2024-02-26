@@ -1,76 +1,46 @@
 import { renderPictures } from './render-pictures.js';
+import { debounce } from './util.js';
 
 const PICTURES__COUNT = 10;
+const RENDER_DELAY = 500;
 
 const imgFilters = document.querySelector('.img-filters');
-const filterRandom = document.getElementById('filter-random');
-const filterDefault = document.getElementById('filter-default');
-const filterDiscussed = document.getElementById('filter-discussed');
-
-let picture = [];
-
-const showFilterRandom = () => {
-  let result = [];
-  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-
-  while (result.length != PICTURES__COUNT) {
-    const index = getRandomInt(picture.length);
-    result.push(picture[index]);
-    result = result.filter((v, i, arr) => arr.indexOf(v) === i);
-  }
-
-  return renderPictures(result);
-};
-
-const showFilterDefault = () => renderPictures(picture);
-
-const sortByComment = (a, b) => b.comments.length - a.comments.length;
-
-const showFilterDiscussed = () => {
-  const sortPicture = picture.sort(sortByComment);
-  return renderPictures(sortPicture);
-};
 
 const removePictures = () => {
-  imgFilters.removeEventListener('click', showFilterActive);
   document.querySelectorAll('.picture').forEach((element) => element.remove());
-
 };
 
+const sortRandom = () => Math.random() - 0.5;
 
-const setFiltersClick = () => {
-  imgFilters.addEventListener('click', (evt) => {
-    const clickButton = evt.target;
+const filterFunctions = {
+  'filter-random': (pictures) => pictures.slice().sort(sortRandom).slice(0, PICTURES__COUNT),
+  'filter-default': (pictures) => pictures,
+  'filter-discussed': (pictures) => pictures.slice().sort((a, b) => b.comments.length - a.comments.length)
+};
 
-    if (clickButton === imgFilters) {
+const setFiltersClick = (pics) => {
+  imgFilters.addEventListener('click', debounce((evt) => {
+    const currentFilter = evt.target;
+    const activeFilter = imgFilters.querySelector('.img-filters__button--active');
+
+    if (!currentFilter.id || currentFilter.id === activeFilter.id) {
       return;
     }
 
-    if (clickButton === filterRandom){
-      removePictures();
-      showFilterRandom();
-    }
+    const filterFn = filterFunctions[currentFilter.id];
+    const filteredPics = filterFn(pics);
 
-    if (clickButton === filterDefault){
-      removePictures();
-      showFilterDefault();
-    }
+    removePictures();
+    renderPictures(filteredPics);
 
-    if (clickButton === filterDiscussed){
-      removePictures();
-      showFilterDiscussed();
-    }
-
-    imgFilters.querySelector('.img-filters__button--active')
-      .classList.remove('img-filters__button--active');
-    clickButton.classList.add('img-filters__button--active');
-  });
+    activeFilter.classList.remove('img-filters__button--active');
+    currentFilter.classList.add('img-filters__button--active');
+  }, RENDER_DELAY));
 };
 
-const showFilterActive = (pictures) => {
+const initFilter = (pictures) => {
   imgFilters.classList.remove('img-filters--inactive');
-  picture = pictures;
-  setFiltersClick();
+  setFiltersClick(pictures);
 };
 
-export {showFilterActive, setFiltersClick};
+export {initFilter};
