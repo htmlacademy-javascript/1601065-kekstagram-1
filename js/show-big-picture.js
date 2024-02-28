@@ -17,6 +17,7 @@ let commentsShown = UPLOADED_COMMENTS_AMOUNT;
 let pictureComments = [];
 
 const onDocumentKeydown = (evt) => {
+
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUserModal();
