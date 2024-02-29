@@ -52,6 +52,7 @@ function closeUploadModal() {
   document.removeEventListener('keydown', onDocumentKeydown);
   resetValidation();
   imgUpload.value = '';
+  imgForm.reset();
 }
 
 const downloadPicture = () => {
@@ -115,4 +116,3 @@ const setUserFormSubmit = () => {
 };
 
 export {setPhotoListener, setUserFormSubmit, onDocumentKeydown};
-

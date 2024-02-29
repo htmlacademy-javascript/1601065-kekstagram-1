@@ -69,6 +69,7 @@ const updateSlider = () => {
     step: chosenEffect.step,
     start: chosenEffect.max
   });
+
   if (isDefault()) {
     sliderEffect.classList.add('hidden');
     sliderContainer.style.display = 'none';
@@ -76,6 +77,7 @@ const updateSlider = () => {
 };
 
 const onFormChange = (evt) => {
+
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
@@ -87,6 +89,7 @@ const onSliderUpdate = () => {
   imgUploadPreview.style.filter = 'none';
   imgUploadPreview.className = '';
   sliderEffectValue.value = '';
+
   if (isDefault()) {
     return;
   }
@@ -119,3 +122,4 @@ const initSlider = () => {
 };
 
 export{resetEffect, initSlider};
+
