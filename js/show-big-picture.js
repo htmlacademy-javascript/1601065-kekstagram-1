@@ -11,6 +11,7 @@ const commentsCount = bigPicture.querySelector('.comments-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const commentTemplate = bigPicture.querySelector('.social__comment');
 const socialCommentCount = bigPicture.querySelector('.social__comment-count');
+const socialCaption = bigPicture.querySelector('.social__caption');
 
 
 let commentsShown = UPLOADED_COMMENTS_AMOUNT;
@@ -39,7 +40,6 @@ function closeUserModal () {
 }
 
 closeButton.addEventListener('click', () => {
-  socialCommentCount.innerHTML = '';
   socialComments.innerHTML = '';
   commentsShown = UPLOADED_COMMENTS_AMOUNT;
   closeUserModal();
@@ -47,6 +47,7 @@ closeButton.addEventListener('click', () => {
 
 const renderPictureDetails = (picture) => {
   bigPictureImg.src = picture.url;
+  socialCaption.textContent = picture.description;
   likesCount.textContent = picture.likes;
   commentsCount.textContent = picture.comments.length;
 };
@@ -76,7 +77,7 @@ const renderComments = (comments) => {
 
 const numberComments = () => {
   commentsShown = Math.min(commentsShown, pictureComments.length);
-  socialCommentCount.textContent = `${commentsShown} из ${pictureComments.length} комментариев`;
+  socialCommentCount.innerHTML = `${commentsShown} из <span class="comments-count">${pictureComments.length}</span> комментариев`;
 };
 
 
